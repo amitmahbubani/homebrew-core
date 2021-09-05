@@ -3,25 +3,26 @@ class OciCli < Formula
 
   desc "Oracle Cloud Infrastructure CLI"
   homepage "https://docs.cloud.oracle.com/iaas/Content/API/Concepts/cliconcepts.htm"
-  url "https://files.pythonhosted.org/packages/34/d0/d1c99c9ed0a6c0844812dfe2677e00617ef1c437d8b9725bcba0517874f3/oci-cli-2.26.4.tar.gz"
-  sha256 "038502eb0cac7e0711c5d44b6f7bad635ad934e68a127cfa4fc86d7e48f2086c"
+  url "https://files.pythonhosted.org/packages/80/db/f896c1f91328f1bb412261904a51f9402972bfe0cd9a3f6f1406f6584d34/oci-cli-3.0.3.tar.gz"
+  sha256 "f2d60e3ef1d5107436a16c4ee5515c580874a39a30bc2be49bca29011b18d54a"
   license any_of: ["UPL-1.0", "Apache-2.0"]
   head "https://github.com/oracle/oci-cli.git"
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "a25d547bf47192cdfd2cb1dab6a56bda91e5f0f55af03fd008b7f6ef645947e8"
-    sha256 cellar: :any,                 big_sur:       "f5fdd9976d2f4734a2f1bc9d00d4b2a83f20996e64c8f0c0223a352343dcf4a2"
-    sha256 cellar: :any,                 catalina:      "1c7191a48e0cd4b0bd9353dff7805837b375757500e200c3e695a1fe9fb33d2e"
-    sha256 cellar: :any,                 mojave:        "9b1b6f9c30c5f7089a93ad58be071cd39f20434cb04cc5ae197c2b08bbb6b80c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b8b69b8df679be239f5f52c37480ea9bc91f31de114af1a193c87c6035a4a00a"
+    sha256 cellar: :any,                 arm64_big_sur: "e59bef090ec4e813574b2d677cffaddd9292eff4e4b5a8789c7771c036090f41"
+    sha256 cellar: :any,                 big_sur:       "edc17f0e2cee588c3d731034a5ec58a0ab742cc1fe97b5a7afc1441249164a4b"
+    sha256 cellar: :any,                 catalina:      "a6761d02c94974fd9df4e109e7f9ae4fd37b6de0c1fc9137f4c5ca1109724e57"
+    sha256 cellar: :any,                 mojave:        "30fac6ed7cf2a819b0faf7bc81ea119b767425fd067630458d4b7abf1f72efe2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "804f0d8bdf48a890ba714fcfb22e5490a553393e2b5f20630c307bfc57ad8dfe"
   end
 
   depends_on "rust" => :build
   depends_on "python@3.9"
+  depends_on "six"
 
   resource "arrow" do
-    url "https://files.pythonhosted.org/packages/ec/74/1cf2d9912921cebdba3fa954949206c8aa159c9cc803b88140fb227f8a0e/arrow-0.17.0.tar.gz"
-    sha256 "ff08d10cda1d36c68657d6ad20d74fbea493d980f8b2d45344e00d6ed2bf6ed4"
+    url "https://files.pythonhosted.org/packages/94/39/b5bb573821d6784640c227ccbd72fa192f7542fa0f68589fd51757046030/arrow-1.1.1.tar.gz"
+    sha256 "dee7602f6c60e3ec510095b5e301441bc56288cb8f51def14dcb3079f623823a"
   end
 
   resource "certifi" do
@@ -35,8 +36,8 @@ class OciCli < Formula
   end
 
   resource "click" do
-    url "https://files.pythonhosted.org/packages/95/d9/c3336b6b5711c3ab9d1d3a80f1a3e2afeb9d8c02a7166462f6cc96570897/click-6.7.tar.gz"
-    sha256 "f15516df478d5a56180fbf80e68f206010e6d160fc39fa508b65e035fd75130b"
+    url "https://files.pythonhosted.org/packages/27/6f/be940c8b1f1d69daceeb0032fee6c34d7bd70e3e649ccac0951500b4720e/click-7.1.2.tar.gz"
+    sha256 "d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"
   end
 
   resource "configparser" do
@@ -55,8 +56,8 @@ class OciCli < Formula
   end
 
   resource "oci" do
-    url "https://files.pythonhosted.org/packages/1f/6c/510eb20d9611a718de3fd097d11fe16a469ab3dd279ba1ef30aacde69d3b/oci-2.43.1.tar.gz"
-    sha256 "1f41fef609eca915a640e61bde98610bbad45256fbaf3684b9d959092fcd0f3d"
+    url "https://files.pythonhosted.org/packages/bd/35/06e6b942ecd2883c3449eb71317b7a1d653225a53bdde9e6c05e840d7c3e/oci-2.44.2.tar.gz"
+    sha256 "491fb0119f0fc9f57e94ed8b339ee4be14ac26774784658849f7cb2ca08c0f02"
   end
 
   resource "pycparser" do
@@ -82,11 +83,6 @@ class OciCli < Formula
   resource "PyYAML" do
     url "https://files.pythonhosted.org/packages/a0/a4/d63f2d7597e1a4b55aa3b4d6c5b029991d3b824b5bd331af8d4ab1ed687d/PyYAML-5.4.1.tar.gz"
     sha256 "607774cbba28732bfa802b54baa7484215f530991055bb562efbed5b2f20a45e"
-  end
-
-  resource "six" do
-    url "https://files.pythonhosted.org/packages/21/9f/b251f7f8a76dec1d6651be194dfba8fb8d7781d10ab3987190de8391d08e/six-1.14.0.tar.gz"
-    sha256 "236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a"
   end
 
   resource "terminaltables" do

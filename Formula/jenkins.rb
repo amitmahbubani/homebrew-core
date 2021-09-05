@@ -1,8 +1,8 @@
 class Jenkins < Formula
   desc "Extendable open source continuous integration server"
   homepage "https://jenkins.io/"
-  url "http://mirrors.jenkins.io/war/2.304/jenkins.war"
-  sha256 "917bafb1981089571fd70f4036f01edace377c7a5f1dffe393247c2373b0638a"
+  url "http://mirrors.jenkins.io/war/2.309/jenkins.war"
+  sha256 "41c5de84c7afe8634212641e143ff02d75105c5697ab41141ff82b4c97916811"
   license "MIT"
 
   livecheck do
@@ -11,7 +11,7 @@ class Jenkins < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "e0977c5f08efbadc96973bdd4c794f392af892672d47c6baf047c6b3ecdc05d2"
+    sha256 cellar: :any_skip_relocation, all: "86540cb9c9494cbdc2de24343030f815b86a72d7fed9d827d265b23c3fcb3817"
   end
 
   head do
@@ -38,30 +38,9 @@ class Jenkins < Formula
     EOS
   end
 
-  plist_options manual: "jenkins"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{Formula["openjdk@11"].opt_bin}/java</string>
-            <string>-Dmail.smtp.starttls.enable=true</string>
-            <string>-jar</string>
-            <string>#{opt_libexec}/jenkins.war</string>
-            <string>--httpListenAddress=127.0.0.1</string>
-            <string>--httpPort=8080</string>
-          </array>
-          <key>RunAtLoad</key>
-          <true/>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run [Formula["openjdk@11"].opt_bin/"java", "-Dmail.smtp.starttls.enable=true", "-jar", opt_libexec/"jenkins.war",
+         "--httpListenAddress=127.0.0.1", "--httpPort=8080"]
   end
 
   test do

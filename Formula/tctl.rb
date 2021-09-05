@@ -1,16 +1,16 @@
 class Tctl < Formula
   desc "Temporal CLI (tctl)"
   homepage "https://temporal.io/"
-  url "https://github.com/temporalio/temporal/archive/v1.11.2.tar.gz"
-  sha256 "9ee41abe22bfeb6d54a91307506699b8d36069344c5535479640876ca946fa64"
+  url "https://github.com/temporalio/temporal/archive/v1.12.0.tar.gz"
+  sha256 "04c8612f1553c70899969e9f134b81d6fe54db7e80b580be189b1a901fe92659"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "0247ac03f42c0640b03cdecd8069009f2071dee5c37962e323cfb13d0ed69ea3"
-    sha256 cellar: :any_skip_relocation, big_sur:       "09f4749fb75001a1bbe087980e0d168f360ca31fdc094d0b544314371e5515db"
-    sha256 cellar: :any_skip_relocation, catalina:      "415def0b7648286bb4895c251b6de925b73dd2549f2d582ae3ca6cc6afd6908a"
-    sha256 cellar: :any_skip_relocation, mojave:        "c4e8cc60aea8c9ac3b968f752e2db46e1472b20d860cb29674111d490611fde0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cba7ffde64faf052bb69a0d0328153422501f064d86584440f50a5416fb9950b"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "5251425199cf3ddf80a562369d1a33782cb8deab2922391379ac62e1c86328dd"
+    sha256 cellar: :any_skip_relocation, big_sur:       "3769f151c7e4cee251638b5e74a91c6d4f3398712ee065ba1132b1980eb792c7"
+    sha256 cellar: :any_skip_relocation, catalina:      "dc6f55645bed87939eac9c7d48026f19d2b32660debb3960c705820ba49a609b"
+    sha256 cellar: :any_skip_relocation, mojave:        "426aad78446c97d83e2fa57c146bd3d03babbd96baa7f8eb4dda5f6f7485d1ca"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d0b4b9cd995c3b69cd48c5d9cae63ed14060234f97b1d286b791ac78042bb828"
   end
 
   depends_on "go" => :build

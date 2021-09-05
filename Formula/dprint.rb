@@ -1,25 +1,23 @@
 class Dprint < Formula
   desc "Pluggable and configurable code formatting platform written in Rust"
   homepage "https://dprint.dev/"
-  url "https://github.com/dprint/dprint/archive/0.15.0.tar.gz"
-  sha256 "2dac5b276d11fcaa02c16fab820127eec3f285029e9917f08fb39cc1dac2ca9a"
+  url "https://github.com/dprint/dprint/archive/0.16.3.tar.gz"
+  sha256 "06ecc241cf521372c59fd2f8f235ae2ddf6d7d1b9c451035149cc6e6d015fe4f"
   license "MIT"
   head "https://github.com/dprint/dprint.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "dd57dd02af568ca48a287f622fc474f5cd15f2a8874a393a6b61f85bc19cda04"
-    sha256 cellar: :any_skip_relocation, big_sur:       "59346ff16bb9dcf61d54e7867b42584bca332272b406053adeef774939f97d36"
-    sha256 cellar: :any_skip_relocation, catalina:      "1205dbf25dc7b843422dd60b6e9703c8c270ce2f08d6eb9237abb09ce9b46f7b"
-    sha256 cellar: :any_skip_relocation, mojave:        "a7ccb9889224caf485fed45206ee754068f03ef9bc7bd78db1a6b0972a377be1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e708509da9f4194a8fbeca4aee5583ea2fed0066f3cd34ffffad053c42e1df5d"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "e443e56c929447d37abf7fec89385ac968ada27aa595b65a4fca3f6ba1f40d8a"
+    sha256 cellar: :any_skip_relocation, big_sur:       "6e23aeb4e01df99e34ae9bea82baf3709d0d59dc98eca9c141b0bb2cc02cb540"
+    sha256 cellar: :any_skip_relocation, catalina:      "cf837085135fd75ae9b68dc33e9d3cc1d22a6d48a2fdaab2d3357e09e1dcc34c"
+    sha256 cellar: :any_skip_relocation, mojave:        "bec59454529a57475adeb2bd024db3e164ea7b548f113048d44556aa5062bd01"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b5d4f3fbb5074e73060277b91311a04a65f002ba5d5aa1fdb332ed478df11161"
   end
 
   depends_on "rust" => :build
 
   def install
-    # replace `--path` arg with `./crates/dprint`
-    args = std_cargo_args.map { |s| s == "." ? "./crates/dprint" : s }
-    system "cargo", "install", *args
+    system "cargo", "install", *std_cargo_args(path: "crates/dprint")
   end
 
   test do

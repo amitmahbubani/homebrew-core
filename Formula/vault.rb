@@ -5,8 +5,8 @@ class Vault < Formula
   desc "Secures, stores, and tightly controls access to secrets"
   homepage "https://vaultproject.io/"
   url "https://github.com/hashicorp/vault.git",
-      tag:      "v1.8.0",
-      revision: "82a99f14eb6133f99a975e653d4dac21c17505c7"
+      tag:      "v1.8.1",
+      revision: "4b0264f28defc05454c31277cfa6ff63695a458d"
   license "MPL-2.0"
   head "https://github.com/hashicorp/vault.git", branch: "main"
 
@@ -16,11 +16,11 @@ class Vault < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "5a6708ba7e83b1b9554a1b4857b74a7fd9661e1728976795aee2aa5474c44cd1"
-    sha256 cellar: :any_skip_relocation, big_sur:       "70bd8c59dd9a46e4b6f057476cf64da4f47843a8c114523f4ee92f0cd2f6d635"
-    sha256 cellar: :any_skip_relocation, catalina:      "a4e7e3154d186894cd3ca61eabf01f99935c076f9a19d613778d929f5ecec000"
-    sha256 cellar: :any_skip_relocation, mojave:        "238c849a19b66f426e35e6db4cdc9dead1535fc526f718f9518a9dbf4105bb27"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "296b5ec554e21378d65645b832b824b577628d4e3bf6fa4e7fff416b731f7eb0"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "10dfd405196881c33a5b20cc78f3f3ac1a5c00f3331e3facd9993bdf12e07d7b"
+    sha256 cellar: :any_skip_relocation, big_sur:       "9e9c2aa82c3b01b249e13be7823a6dc0fc9cb863542239e2e1be0917ef872b5e"
+    sha256 cellar: :any_skip_relocation, catalina:      "027b8dcb2c36e24c52b0b55e569b2ad8e3a422d8d108936b353dfd4a85196c70"
+    sha256 cellar: :any_skip_relocation, mojave:        "bb02f3e56b99260044606aa2ef4e649dace21400591c87c28a65560a0d92a11d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "05bb9e88058a23a26fff31072b869c9dde07da3b6fc6458131ab8a24fa44ae32"
   end
 
   depends_on "go" => :build
@@ -35,38 +35,12 @@ class Vault < Formula
     bin.install "bin/vault"
   end
 
-  plist_options manual: "vault server -dev"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>KeepAlive</key>
-          <dict>
-            <key>SuccessfulExit</key>
-            <false/>
-          </dict>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{opt_bin}/vault</string>
-            <string>server</string>
-            <string>-dev</string>
-          </array>
-          <key>RunAtLoad</key>
-          <true/>
-          <key>WorkingDirectory</key>
-          <string>#{var}</string>
-          <key>StandardErrorPath</key>
-          <string>#{var}/log/vault.log</string>
-          <key>StandardOutPath</key>
-          <string>#{var}/log/vault.log</string>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run [opt_bin/"vault", "server", "-dev"]
+    keep_alive true
+    working_dir var
+    log_path var/"log/vault.log"
+    error_log_path var/"log/vault.log"
   end
 
   test do

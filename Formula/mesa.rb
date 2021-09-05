@@ -3,19 +3,10 @@ class Mesa < Formula
 
   desc "Graphics Library"
   homepage "https://www.mesa3d.org/"
+  url "https://mesa.freedesktop.org/archive/mesa-21.2.1.tar.xz"
+  sha256 "2c65e6710b419b67456a48beefd0be827b32db416772e0e363d5f7d54dc01787"
   license "MIT"
   head "https://gitlab.freedesktop.org/mesa/mesa.git", branch: "main"
-
-  stable do
-    url "https://mesa.freedesktop.org/archive/mesa-21.1.6.tar.xz"
-    sha256 "b1cb0122f911dfa9fe1f209a7061378c61a1448a280e711511ca72dad9999e37"
-
-    # should be removed in mesa 21.2
-    patch do
-      url "https://gitlab.freedesktop.org/mesa/mesa/-/commit/89b4f337d50c01c5782e19ee40b57a6c9e4b324b.diff"
-      sha256 "e3a7b97e40485d829708bf6013b0755f92f52d00c91bb0f40aa1cdae3cc69e98"
-    end
-  end
 
   livecheck do
     url "https://www.mesa3d.org/news/"
@@ -23,11 +14,11 @@ class Mesa < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "53d0874636e531f7c4339bab584c811ceb04abd491828ef601bc8326cc079a57"
-    sha256 big_sur:       "ed822db7f8853d2a13f11415e98c1051c0085826e4dc74e50b95442c31084dfe"
-    sha256 catalina:      "9a5cd8b489953e381ac8258f9030a7f99db0df245c9d8cda9055898c81725fcf"
-    sha256 mojave:        "93df8650ea0fa954a5cffe7baa6a4cdcb445d99fe3a449ebe06ea3d644c595b7"
-    sha256 x86_64_linux:  "952060c7e16780a64a7ded5ce435a234eebccc8d5ce37053d7b0685ecdedf0ee"
+    sha256 arm64_big_sur: "823c5620d718ecc237cae1553b3890dff2b4da187eb042ef80dd7295b65652b9"
+    sha256 big_sur:       "dd91e55a6451d5ae72507142e89c1c87fd6c140af37cd1401f48eacd3e25f05a"
+    sha256 catalina:      "a1c66d822a58a9bde2cb968c80c45fdb571b415830e4a4c7bc0cada55a705cfd"
+    sha256 mojave:        "d6324a830826107cc9d8904f3a459e3d992e3ab28c43cffd937f0d7b173e227f"
+    sha256 x86_64_linux:  "a8af146e5b4cb3713873916de311359d588605ae54855d8ec8502a768ffcf4e7"
   end
 
   depends_on "meson" => :build
@@ -48,18 +39,18 @@ class Mesa < Formula
   uses_from_macos "zlib"
 
   on_linux do
+    depends_on "elfutils"
     depends_on "gcc"
-    depends_on "lm-sensors"
-    depends_on "libelf"
+    depends_on "libdrm"
+    depends_on "libva"
+    depends_on "libvdpau"
     depends_on "libxfixes"
     depends_on "libxrandr"
     depends_on "libxshmfence"
     depends_on "libxv"
     depends_on "libxvmc"
     depends_on "libxxf86vm"
-    depends_on "libva"
-    depends_on "libvdpau"
-    depends_on "libdrm"
+    depends_on "lm-sensors"
     depends_on "wayland"
     depends_on "wayland-protocols"
   end

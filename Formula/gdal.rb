@@ -4,7 +4,7 @@ class Gdal < Formula
   url "https://download.osgeo.org/gdal/3.3.1/gdal-3.3.1.tar.xz"
   sha256 "48ab00b77d49f08cf66c60ccce55abb6455c3079f545e60c90ee7ce857bccb70"
   license "MIT"
-  revision 2
+  revision 3
 
   livecheck do
     url "https://download.osgeo.org/gdal/CURRENT/"
@@ -12,10 +12,12 @@ class Gdal < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "f5dd9598572139ae6950bf8ba3c882ab35239e8a7970b3beef8cbded353e6aec"
-    sha256 big_sur:       "afe23005ca5c660e2a05d670b33935325ef4e474d2873cbb6baa177f3eac7077"
-    sha256 catalina:      "e618654ce376c7f9c2602299a1b8dbf56e439d7d941c7405b8d22223fb83b892"
-    sha256 mojave:        "6c569419861b1d340e2db1738c8562cb34f1950581695cfc5b7b2480a9943e7a"
+    rebuild 1
+    sha256 arm64_big_sur: "5498ef4c89c2463bc737a793b9eea0e06a9925cb5468b5185e6aea7785ebbb84"
+    sha256 big_sur:       "d6eb3a852006c0a128c245a2d63d71b3947e6417187185dfb6ba9452f5651b8c"
+    sha256 catalina:      "13be62d5c57a0caaca872d428baae8771426a8814f1d7eca8f7cfce6b68e2195"
+    sha256 mojave:        "55723d338fa16ec01c198c5707de95db50f3d4e907f436338dbfd3d68572fbe5"
+    sha256 x86_64_linux:  "c787946f72001f105843e2ff7cd8a605c5002a1a1e98be9f6d5970c53648dce2"
   end
 
   head do
@@ -57,11 +59,14 @@ class Gdal < Formula
   uses_from_macos "curl"
 
   on_linux do
-    depends_on "bash-completion"
+    depends_on "util-linux"
+    depends_on "gcc"
   end
 
   conflicts_with "avce00", because: "both install a cpl_conv.h header"
   conflicts_with "cpl", because: "both install cpl_error.h"
+
+  fails_with gcc: "5"
 
   def install
     args = [
@@ -71,7 +76,6 @@ class Gdal < Formula
       "--disable-debug",
       "--with-libtool",
       "--with-local=#{prefix}",
-      "--with-opencl",
       "--with-threads",
 
       # GDAL native backends
@@ -143,9 +147,15 @@ class Gdal < Formula
 
     on_macos do
       args << "--with-curl=/usr/bin/curl-config"
+      args << "--with-opencl"
     end
     on_linux do
       args << "--with-curl=#{Formula["curl"].opt_bin}/curl-config"
+
+      # The python build needs libgdal.so, which is located in .libs
+      ENV.append "LDFLAGS", "-L#{buildpath}/.libs"
+      # The python build needs gnm headers, which are located in the gnm folder
+      ENV.append "CFLAGS", "-I#{buildpath}/gnm"
     end
 
     system "./configure", *args

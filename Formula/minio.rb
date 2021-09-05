@@ -2,9 +2,9 @@ class Minio < Formula
   desc "High Performance, Kubernetes Native Object Storage"
   homepage "https://min.io"
   url "https://github.com/minio/minio.git",
-      tag:      "RELEASE.2021-07-27T02-40-15Z",
-      revision: "ddcd419b4c4255edb103e2dc425ff912e36a12e0"
-  version "20210727024015"
+      tag:      "RELEASE.2021-08-31T05-46-54Z",
+      revision: "2077d2705324bb83d7998a26740565a517252438"
+  version "20210831054654"
   license "AGPL-3.0-or-later"
   head "https://github.com/minio/minio.git"
 
@@ -17,11 +17,11 @@ class Minio < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "08bee261f2b241cd3c9c54b77b5b4c40d456727f04ac9af4ca8998704beffb78"
-    sha256 cellar: :any_skip_relocation, big_sur:       "214f3afd7f681d3a6820bfdadb586d3a43152d5dd949fc134b51b840e878a9cb"
-    sha256 cellar: :any_skip_relocation, catalina:      "c32910ef89f9f1c1a4a1a3688a12eb0daeb3f9ae746c19dda7e49bdd7a314448"
-    sha256 cellar: :any_skip_relocation, mojave:        "b2ff884c068469dbd52cd2f499076baf0607cc681bc71f22268c897f76166cb7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b2b1b3daef4c7d8394ff4289b37c9e61eef6ea7cd1325f68c6eec2f0efb6d475"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "29688774bf0f902b2052ae5536a12c3ac227848b1698eceddfbb98858fbb7563"
+    sha256 cellar: :any_skip_relocation, big_sur:       "8c92e4887656cb4d601aa150cac08a9b75559a125822f8bb923973c3a7232980"
+    sha256 cellar: :any_skip_relocation, catalina:      "79e9cde27b069d30d9734fbd2aaaf58d3004bbda23fc4a82a95630f9b9032fb1"
+    sha256 cellar: :any_skip_relocation, mojave:        "db1ee3be7325c34b4aff4a377842968454bfee4a2dce165fc923cb7857f04e92"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b7161700b1e88a8804a11f542a7042728b62cc561339d4684d28db3c14f34138"
   end
 
   depends_on "go" => :build
@@ -49,41 +49,12 @@ class Minio < Formula
     (etc/"minio").mkpath
   end
 
-  plist_options manual: "minio server"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>KeepAlive</key>
-          <true/>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{opt_bin}/minio</string>
-            <string>server</string>
-            <string>--config-dir=#{etc}/minio</string>
-            <string>--address=:9000</string>
-            <string>#{var}/minio</string>
-          </array>
-          <key>RunAtLoad</key>
-          <true/>
-          <key>KeepAlive</key>
-          <true/>
-          <key>WorkingDirectory</key>
-          <string>#{HOMEBREW_PREFIX}</string>
-          <key>StandardErrorPath</key>
-          <string>#{var}/log/minio.log</string>
-          <key>StandardOutPath</key>
-          <string>#{var}/log/minio.log</string>
-          <key>RunAtLoad</key>
-          <true/>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run [opt_bin/"minio", "server", "--config-dir=#{etc}/minio", "--address=:9000", var/"minio"]
+    keep_alive true
+    working_dir HOMEBREW_PREFIX
+    log_path var/"log/minio.log"
+    error_log_path var/"log/minio.log"
   end
 
   test do
